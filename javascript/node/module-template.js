@@ -2,7 +2,19 @@
 * module-template.js
 *
 * template for Node.js module
-*
+* 
+* usage:
+* 
+* var mt = require('./module-template.js')({ message: 'initParams' });
+* 
+* mt.requestGet({url: 'https://github.com/dave-cz/useful-scripts/raw/master/javascript/node/module-template.js'}, function (err, res, body) {
+* 	if (err) {
+* 		console.log(err);
+* 	}else {
+* 		console.log(body);
+* 	}
+* });
+* 
 */
 
 'use strict';
