@@ -6,9 +6,8 @@
 #  Reconnect WiFi when internet is down
 #
 
-from os import system
+import os, sys
 from urllib2 import urlopen, URLError
-from sys import argv
 from datetime import datetime
 from time import sleep
 from argparse import ArgumentParser
@@ -19,15 +18,16 @@ class AutoReconnect:
 		self.__dict__.update(args.__dict__)
 		self.url = 'http://www.google.com'
 		self.command = 'netsh.exe wlan connect name="{}" ssid="{}"'
+		self.logdir = os.path.dirname(os.path.abspath(__file__))
+		self.logfile = 'timeout.log'
 	
 	def loop(self):
 		while True:
 			if self.is_internet_on():
-				print "OK:", datetime.now().time()
+				print "OK:", datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 			else:
-				print "Restarting WiFi Connection", datetime.now().time()
+				self.log('Connection timeout at '+datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 				self.reconnect()
-				print "\nRestarting WiFi Done", datetime.now().time()
 			sleep(self.sleeptime)
 
 	def is_internet_on(self):
@@ -39,10 +39,15 @@ class AutoReconnect:
 	
 	def reconnect(self):
 		try:
-			system(self.command.format(self.name, self.ssid))
+			os.system(self.command.format(self.name, self.ssid))
 		except Exception, ex:
 			print ex
-
+	
+	def log(self, message):
+		print 'Log: ', message
+		with open(self.logdir+'\\'+self.logfile, 'ab+') as f:
+			f.write(message+'\n')
+	
 if __name__ == '__main__':
 	parser = ArgumentParser()
 	parser.add_argument('-s', '--sleeptime', type=int, help="loop period, default = 30 s", default=30)
