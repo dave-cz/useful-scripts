@@ -1,3 +1,4 @@
 /javascript/node/node_modules
 */geany_run_script.bat
 /python/timeout.log
+*.pyc
