@@ -10,10 +10,11 @@ TODO: start Wi-Fi, if off: Win+X, T
 import os
 from WindowFinder import WindowFinder
 from SendKeys import SendKeys
-from urllib2 import urlopen#, URLError
+from urllib2 import urlopen  # , URLError
 from datetime import datetime
 from time import sleep
 from argparse import ArgumentParser
+
 
 class AutoReconnect(object):
     """ Reconnect WiFi when internet is down """
@@ -71,8 +72,8 @@ class AutoReconnect(object):
         win = WindowFinder()
         win.find_window_wildcard('Miranda')
         win.set_foreground()
-        SendKeys('^(+)') # Ctrl + '+'
-        SendKeys('{ENTER}') # Confirm window 'Change online message'
+        SendKeys('^(+)')  # Ctrl + '+'
+        SendKeys('{ENTER}')  # Confirm window 'Change online message'
 
 if __name__ == '__main__':
     parser = ArgumentParser()
@@ -81,6 +82,6 @@ if __name__ == '__main__':
     parser.add_argument('-n', '--name', help="Wifi Network Name, default = 'SviZaCha'", default='SviZaCha')
     parser.add_argument('-ssid', '--ssid', help="Wifi Network SSID, default = 'SviZaCha'", default='SviZaCha')
     parser.add_argument('-m', '--miranda', help="Set Miranda IM online, default = True", default=True)
-    
+
     args_reconnect = vars(parser.parse_args())
     AutoReconnect(args_reconnect).loop()

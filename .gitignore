@@ -2,3 +2,4 @@
 */geany_run_script.bat
 /python/timeout.log
 *.pyc
+.idea
